@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="shadow overflow-hidden sm:rounded-lg">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900 text-4xl">
+          {{ quiz.name }}
+        </h3>
+      </div>
+    {% for question in quiz.question_set.all %}
+      <div class="border-t border-gray-200">
+        <dl>
+          <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              問題
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ question.text }}
+            </dd>
+          </div>
+          
+          <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              選択肢
+            </dt>
+          
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {% for answer in question.answer_set.all %}
+              {{ answer.text }}
+          {% endfor %}
+            </dd>
+          </div>
+          <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              答え
+            </dt>
+          {% for answer in question.answer_set.all %}
+            {% if answer.is_correct %}
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ answer.text }}
+            </dd>
+            {% endif %}
+          {% endfor %}
+          </div>
+            
+          
+          <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              解説
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ question.quizexplanation.text }}
+                    
+            </dd>
+          </div>
+          <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              ソース
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+             {{ question.quizexplanation.source }}
+            </dd>
+          </div>
+          <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+            <a href="{% url 'question-edit' pk=question.pk %}" class="no-underline mr-4 text-blue-500 hover:text-blue-400">編集</a>
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <a href="{% url 'question-delete' pk=question.pk %}" class="no-underline mr-4 text-blue-500 hover:text-blue-400">削除</a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    {% endfor %}
+    </div>
+
+
+
+{% endblock  %}

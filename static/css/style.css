@@ -1,0 +1,32 @@
+.bg {
+    background: linear-gradient(
+      60deg,
+      rgb(142,252,233) 10%,
+      rgb(88,161,230) 50%,
+      rgb(185,147,243	) 100%
+    );
+  }
+
+.bg-circle {
+    background: linear-gradient(
+      45deg,
+      white 0%,
+      transparent 80%
+    );
+  }
+
+.modal {
+    transition: opacity 0.25s ease;
+}
+body.modal-active {
+  overflow-x: hidden;
+  overflow-y: visible !important;
+}
+
+.not-visible {
+  display: none;
+}
+
+.yubi {
+  cursor : pointer;
+}

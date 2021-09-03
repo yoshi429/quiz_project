@@ -1,0 +1,15 @@
+
+
+<!-- This example requires Tailwind CSS v2.0+ -->
+  <div class="flex-1 flex justify-between ">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-black text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+      前へ
+    </a>
+    {% endif %}
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-black text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+      次へ
+    </a>
+    {% endif %} 
+  </div>

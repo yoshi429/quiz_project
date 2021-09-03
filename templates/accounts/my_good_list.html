@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="flex items-center  py-2">
+        {% include 'components/modal.html' with quizes=quizes %}
+    </div>
+{% endblock  %}

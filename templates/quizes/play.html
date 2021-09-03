@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<button class="bg-transparent border border-black hover:border-indigo-500 text-black hover:text-indigo-500 font-bold py-2 px-4 rounded-full"><a href="{% url 'list' %}">戻る<a></button>
+{% comment %} 
+<div class="max-w-sm rounded overflow-hidden shadow-lg mx-auto my-8">
+    <form id='question-form'>{% csrf_token %}
+    <div class="px-6 py-4">
+        <div class="font-bold text-xl text-black mb-2">
+                <div>{{quiz.name}}</div>
+                <div id='timer-box'>{{quiz.rimit_time}}分</div>
+                <hr>
+        </div>        
+    </div>
+        <div class="text-black mb-4" id='question-box'></div>
+    <div class="px-6 py-4">
+        <button class="bg-transparent border border-black hover:border-indigo-500 text-black hover:text-indigo-500 font-bold py-2 px-4 rounded-full" type='submit'>ファイナルアンサー！</button>
+    </div>
+    </form>
+<div class="text-black" id='result-box'></div>
+</div> {% endcomment %}
+
+
+<div class="shadow overflow-hidden sm:rounded-lg">
+    <form id='question-form'>{% csrf_token %}
+      <div class="px-4 py-5 sm:px-6 content-center">
+         <h3 class="text-lg leading-6 font-medium text-gray-900 text-4xl" id='timer-box'>{{quiz.rimit_time}}分</h3>
+      </div>
+      <div class="border-t border-gray-200">
+        <dl>
+
+        <div class="text-black mb-4" id='question-box'>
+        {% comment %} クイズの中身 {% endcomment %}
+        </div>
+        
+          <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              <button class="bg-transparent border border-black hover:border-indigo-500 text-black hover:text-indigo-500 font-bold py-2 px-4 rounded-full" type='submit'>ファイナルアンサー！</button>
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            </dd>
+          </div>
+
+        </dl>
+      </div>
+    </form>
+    <div class="text-black" id='result-box'></div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'js/quiz_play.js' %}" defer></script>
+{% endblock %}

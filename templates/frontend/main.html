@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    {% if user.is_authenticated %}
+      <div class="text-blue-700 px-4 py-3 relative" role="alert">
+      <strong class="font-bold">{{ user.username }} さん</strong>
+      <span class="block sm:inline">こんにちは</span>
+      </div>
+    {% endif %}
+  <div class="flex-wrap flex w-2/3 mx-auto p-8">
+
+    <div class="relative w-1/3">
+      <div class="w-32 h-32 bg-circle rounded-full opacity-25"></div>
+      <div class="absolute pin-t ml-8 p-2">
+        <div class="text-5xl opacity-50"></div>
+        <div class="text-lg opacity-75">
+        <a href="{% url 'create-quiz' %}">クイズを作る</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative w-1/3">
+      <div class="w-32 h-32 bg-circle rounded-full opacity-25"></div>
+      <div class="absolute pin-t ml-8 p-2">
+        <div class="text-5xl opacity-50"></div>
+        <div class="text-lg opacity-75">
+        <a href="{% url 'list'%}">クイズ</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative w-1/3">
+      <div class="w-32 h-32 bg-circle rounded-full opacity-25"></div>
+      <div class="absolute pin-t ml-8 p-2">
+        <div class="text-lg opacity-75">
+        <a href="{% url 'post_contact_us' %}">お問い合わせ</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+{% endblock %}
+

@@ -1,0 +1,9 @@
+{% block content %}
+
+<form class="w-full max-w-sm" method='GET' action="{% url 'list' %}">
+  <div class="flex items-center border-b border-teal-500 py-2">
+    <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none placeholder-gray-500 placeholder-opacity-100 " type="text" placeholder="キーワードを入力してください" name="search_word" value="{{ search_word }}">
+  </div>
+</form>
+
+{% endblock %}

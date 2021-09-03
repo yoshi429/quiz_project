@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'components/search.html' %}
+
+{% include 'components/modal.html' with quizes=quiz_list categories=category_list %}
+
+{% include 'components/pagination.html' %}
+
+{% endblock  %}
+

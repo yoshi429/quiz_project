@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load socialaccount %}
+
+
+{% block content %}
+
+{% for error in form.non_field_errors %}
+<p>{{ error }}</p>
+{% endfor %}
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Log in to your account
+      </h2>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        Or
+        <a href="{% url 'user-register' %}" class="font-medium text-indigo-600 hover:text-indigo-500">
+            Sign Up or 
+        </a>
+        <a href="{% provider_login_url 'google' %}">Google Login</a>
+      </p>
+      <p class="mt-2 text-center text-sm text-gray-600"><a href="{% url 'terms_of_service' %}">利用規約</a></P>
+    </div>
+    <form class="mt-8 space-y-6" action="#" method="POST">{% csrf_token %}
+      <input type="hidden" name="remember" value="true">
+      <div class="rounded-md shadow-sm -space-y-px">
+        <div>
+          <label for="email-address" class="sr-only">Email address</label>
+          {% render_field form.username class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="メールアドレスを入力してください" %}
+        </div>
+        <div>
+          <label for="password" class="sr-only">Password</label>
+          {% render_field form.password class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="パスワードを入力してください" %}
+          <div class="md:flex md:items-center">
+            <div class="md:w-1/3">
+              <button id="submit" type="submit"  class="px-4 py-2 rounded bg-teal-400 shadow text-black font-bold focus:outline-none focus:shadow-outline hover:bg-teal-400">ログイン</button>
+            </div>
+          </div>
+    </form>
+       </div>
+      </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="flex items-center  py-2">
+  {% if my_quiz_list %}
+    {% for quiz in my_quiz_list %}
+
+    <div class="max-w-sm rounded overflow-hidden shadow-lg mx-auto my-8">
+      <div class="px-6 py-4">
+      <p>{{ quiz.name }} - {{quiz.difficulty}} - {{ quiz.number_of_questions}}問</p><hr>
+        <div class="font-bold  text-black mb-2"></div>
+        <p class="text-black text-base">
+          {{quiz.purpose}}
+        </p>
+      </div>
+      
+      {% comment %} button infomation {% endcomment %}
+      <div class="px-6 py-4">
+        <button class="bg-transparent border border-gray-500 hover:border-indigo-500 text-black hover:text-indigo-500 font-bold py-2 px-4 rounded-full"><a href="/?quizes_category_name={{quiz.category.name}}">{{quiz.category.name}}<a></button>
+        <button class="place-self-end modal-button modal-open bg-transparent border border-gray-500 hover:border-indigo-500 text-black  hover:text-indigo-500 font-bold py-2 px-4 rounded-full">
+        <a href="{% url 'quiz-detail' pk=quiz.id %}">詳細<a></button>
+        
+        <button class="bg-transparent border border-gray-500 hover:border-indigo-500 text-black hover:text-indigo-500 font-bold py-2 px-4 rounded-full">
+        <a href="{% url 'add-question' pk=quiz.id %}">クイズを追加<a></button>
+      </div>
+    </div>
+
+    {% endfor %}
+</div>
+{% else %}
+
+  まだ投稿されていません。
+
+{% endif %}
+
+{% endblock  %}
