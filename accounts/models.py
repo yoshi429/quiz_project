@@ -62,6 +62,7 @@ class ContactUs(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.CharField(max_length=255, default='https://yoshi-quiz-project.s3.amazonaws.com/default.jpg')
     introduce = models.CharField(max_length=255, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

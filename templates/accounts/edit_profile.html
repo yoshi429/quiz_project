@@ -14,7 +14,7 @@
 
 
 <div class="container mx-auto flex items-center justify-center text-black">
-  <form method="POST"  id='customer-post-form' class="w-full max-w-lg" id="cusomer-opinion-for">{% csrf_token %}
+  <form method="POST"  id='customer-post-form' class="w-full max-w-lg" id="cusomer-opinion-for" enctype="multipart/form-data">{% csrf_token %}
     {% for field in form %}
     <div class="flex flex-wrap flex-col mb-6 w-full" >
       {{ field.label_tag }}

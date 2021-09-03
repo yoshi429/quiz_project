@@ -11,6 +11,7 @@ from django.views.generic.edit import CreateView
 
 from .forms import UserRegistrationForm, UserLoginForm, ContactUsForm, EditProfileForm
 from quizes.models import Quiz
+from .utils import save_pictures_s3
 
 
 User = get_user_model()
@@ -82,10 +83,21 @@ def edit_profile_view(request, user_id):
     
     if request.method == 'POST':
         form = EditProfileForm(request.POST or None, request.FILES or None)
+        print(request.FILES)
+        print(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             introduce = data['introduce']
-            profile.introduce = introduce
+            image = data['profile_picture']
+            print('intro', introduce)
+            print('iamge', image)
+            if introduce:
+                profile.introduce = introduce
+            if image:
+                profile.image = save_pictures_s3(
+                    picture=image,
+                    user_id=request.user
+                )
             profile.save()
             return redirect('user-profile', user_id=user_id) 
 
