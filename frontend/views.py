@@ -24,4 +24,7 @@ def page_not_found(request, exception):
 
 
 def server_error(request):
+    """
+    500画面
+    """
     return render(request, 'components/500.html', status=500)
