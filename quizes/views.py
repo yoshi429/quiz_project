@@ -10,11 +10,17 @@ from .forms import CreateQuizForm, AddQuestionForm, EditQuestionForm, CommentQui
 
 
 def quiz_play_view(request, pk):
+    """
+    クイズをする機能
+    """
     quiz = Quiz.objects.get(id=pk)
     return render(request, 'quizes/play.html', context={'quiz': quiz})
 
 
 def question_data(request, pk):
+    """
+    クイズのデータを送信
+    """
     try:
         quiz = Quiz.objects.get(id=pk)
     except:
@@ -29,6 +35,9 @@ def question_data(request, pk):
 
 
 def result_view(request, pk):
+    """
+    クイズの結果を受信し、結果を返す
+    """
     if request.is_ajax():
         questions = []
         results = []
@@ -62,6 +71,9 @@ def result_view(request, pk):
 
 
 class QuizListView(ListView):
+    """
+    クイズ一覧
+    """
     context_object_name = 'quiz_list'
     template_name = 'quizes/list.html'
     model = Quiz
@@ -85,6 +97,9 @@ class QuizListView(ListView):
 
 @login_required
 def create_quiz_view(request):
+    """
+    クイズの投稿機能
+    """
     form = CreateQuizForm()
     user = request.user
     if not user.is_authenticated:
@@ -130,6 +145,9 @@ def create_quiz_view(request):
 
 @login_required
 def add_question_view(request, pk):
+    """
+    既存のクイズに問題を追加する機能
+    """
     form = AddQuestionForm()
     user = request.user
 
@@ -170,6 +188,9 @@ def add_question_view(request, pk):
 
 @login_required
 def delete_quiz_view(request, pk):
+    """
+    クイズの削除機能
+    """
     user = request.user
     try:
         quiz = Quiz.objects.get(user=user, pk=pk)
@@ -181,6 +202,9 @@ def delete_quiz_view(request, pk):
 
 @login_required
 def delete_question_view(request, pk):
+    """
+    既存のクイズに存在する問題を削除
+    """
     user = request.user
     try:
         question = Question.objects.get(pk=pk)
@@ -205,6 +229,9 @@ def delete_question_view(request, pk):
 
 @login_required
 def edit_question_view(request, pk):
+    """
+    既存のクイズの問題を編集する機能
+    """
     user = request.user
     form = EditQuestionForm()
     try:
@@ -256,6 +283,9 @@ def edit_question_view(request, pk):
 
 @login_required
 def comment_quiz_view(request, quiz_id):
+    """
+    クイズにコメントする機能
+    """
     try:
         quiz = Quiz.objects.get(id=quiz_id)
     except Quiz.DoesNotExist:
@@ -276,6 +306,9 @@ def comment_quiz_view(request, quiz_id):
 
 @login_required
 def quiz_handle_like(request, quiz_id):
+    """
+    クイズのいいね機能
+    """
     try:
         quiz = Quiz.objects.get(id=quiz_id)
     except Quiz.DoesNotExist:

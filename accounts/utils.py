@@ -7,6 +7,9 @@ from django.conf import settings
 
 # amazon s3 で保存
 def save_pictures_s3(picture, user_id):
+    """
+    Amazon S3に写真を保存するメソッド
+    """
     aws_access_key_id = settings.AWS_ACCESS_KEY_ID
     aws_secret_access_key = settings.AWS_SECRET_ACCESS_KEY
     s3_bucket = settings.AWS_STORAGE_BUCKET_NAME

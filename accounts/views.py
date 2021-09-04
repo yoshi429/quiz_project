@@ -13,26 +13,37 @@ from .forms import UserRegistrationForm, UserLoginForm, ContactUsForm, EditProfi
 from quizes.models import Quiz
 from .utils import save_pictures_s3
 
-
 User = get_user_model()
 
 
 class RegistrationUserView(CreateView):
+    """
+    ユーザー登録機能
+    """
     template_name = 'accounts/user_register.html'
     # template_name = 'form.html'
     form_class = UserRegistrationForm
 
 
 class LoginView(LoginView):
+    """
+    ログイン機能
+    """
     template_name = 'accounts/login.html'
     authentication_form = UserLoginForm
 
 
 class LogoutView(LoginRequiredMixin, LogoutView):
+    """
+    ログアウト機能
+    """
     pass
 
 
 def my_quiz_list(request, user_id):
+    """
+    自分のクイズ一覧
+    """
     try:
         user = User.objects.get(id=user_id)
     except:
@@ -42,12 +53,18 @@ def my_quiz_list(request, user_id):
 
 
 class MyQuizDetailView(LoginRequiredMixin, DetailView):
+    """
+    クイズの詳細情報
+    """
     model = Quiz
     context_object_name = 'quiz'
     template_name = 'accounts/my_quiz_detail.html'
 
 
 def post_contact(request, *args, **kwargs):
+    """
+    お問い合わせ機能
+    """
     form = ContactUsForm(request.POST or None)
     data = {}
     if request.is_ajax():
@@ -64,6 +81,10 @@ def post_contact(request, *args, **kwargs):
 
 
 def profile_view(request, user_id):
+    """
+    プロフィールの情報
+    フォロー数、フォロワー数、投稿数、いいね数
+    """
     try:
         user = User.objects.get(id=user_id)
         profile = Profile.objects.get(user=user)
@@ -74,7 +95,9 @@ def profile_view(request, user_id):
 
 @login_required
 def edit_profile_view(request, user_id):
-    
+    """
+    プロフィールの編集機能
+    """
     try:
         user = User.objects.get(id=user_id)
         profile = Profile.objects.get(user=user)
@@ -107,6 +130,9 @@ def edit_profile_view(request, user_id):
 
 @login_required
 def handle_follow(request, user_id):
+    """
+    フォロー、フォローを外す機能
+    """
     me = request.user
 
     if me.id == user_id:
@@ -131,6 +157,9 @@ def handle_follow(request, user_id):
 
 
 def follower_list_view(request, user_id):
+    """
+    フォロワーのユーザー一覧
+    """
     try:
         user = User.objects.get(id=user_id)
     except:
@@ -143,6 +172,9 @@ def follower_list_view(request, user_id):
 
 
 def follow_list_view(request, user_id):
+    """
+    フォローしたユーザー一覧
+    """
     try:
         user = User.objects.get(id=user_id)
     except:
@@ -154,6 +186,9 @@ def follow_list_view(request, user_id):
 
 
 def my_good_list(request, user_id):
+    """
+    自分がいいねしたクイズ一覧
+    """
     try:
         user = User.objects.get(id=user_id)
     except:

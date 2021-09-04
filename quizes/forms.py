@@ -11,6 +11,9 @@ CATEGORY_CHOICES = settings.CATEGORY_CHOICES
 
 
 class CreateQuizForm(forms.Form):
+    """
+    クイズの投稿のフォーム
+    """
     category_name = forms.ChoiceField(label='カテゴリー', choices=CATEGORY_CHOICES)
     quiz_title = forms.CharField(label='タイトル')
     rimit_time = forms.IntegerField(label='制限時間')
@@ -55,6 +58,9 @@ class CreateQuizForm(forms.Form):
     
 
 class AddQuestionForm(forms.Form):
+    """
+    既存のクイズに問題を追加するフォーム
+    """
     rimit_time = forms.IntegerField(label='制限時間')
     question_text = forms.CharField(label='問題文')
     answer_choice_1 = forms.CharField(label='選択肢1')
@@ -95,6 +101,9 @@ class AddQuestionForm(forms.Form):
 
 
 class EditQuestionForm(forms.Form):
+    """
+    既存のクイズの問題を編集するフォーム
+    """
     question_text = forms.CharField(label='問題文')
     answer_choice_1 = forms.CharField(label='選択肢1')
     answer_choice_2 = forms.CharField(label='選択肢2')
@@ -134,6 +143,9 @@ class EditQuestionForm(forms.Form):
 
 
 class CommentQuizForm(forms.Form):
+    """
+    クイズにコメントするフォーム
+    """
     content = forms.CharField(label='コメント')
 
     def clean_content(self):

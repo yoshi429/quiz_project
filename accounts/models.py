@@ -67,11 +67,6 @@ class Profile(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     followers = models.ManyToManyField(User, related_name='following', blank=True)
-    """
-    project_obj = Profile.objects.first()
-    project_obj.followers.all() -> All users following this profile
-    user.following.all() -> All user profiles I follow
-    """
 
     def __str__(self):
         return f'{self.user.username}のProfile'

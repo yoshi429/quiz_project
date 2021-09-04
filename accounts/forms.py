@@ -11,6 +11,9 @@ User = get_user_model()
 
 
 class UserRegistrationForm(forms.ModelForm):
+    """
+    ユーザー登録機能
+    """
     username = forms.CharField(label='名前')
     email = forms.EmailField(label='メールアドレス')
     password = forms.CharField(label='パスワード', widget=forms.PasswordInput)
@@ -66,11 +69,17 @@ class UserRegistrationForm(forms.ModelForm):
 
 
 class UserLoginForm(AuthenticationForm):
+    """
+    ログインフォーム
+    """
     username = forms.EmailField(label='メールアドレス')
     password = forms.CharField(label='パスワード', widget=forms.PasswordInput)
 
 
 class ContactUsForm(forms.ModelForm):
+    """
+    お問い合わせフォーム
+    """
     author = forms.CharField(label='氏名')
     email = forms.EmailField(label='メールアドレス')
     title = forms.CharField(label='件名')
@@ -82,6 +91,9 @@ class ContactUsForm(forms.ModelForm):
 
 
 class EditProfileForm(forms.Form):
+    """
+    プロフィールの編集フォーム
+    """
     profile_picture = forms.FileField(label='トプ画', required=False)
     introduce = forms.CharField(label='紹介文', required=False)
 
