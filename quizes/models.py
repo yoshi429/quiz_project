@@ -40,6 +40,9 @@ class Quiz(models.Model):
         return f"{self.name}-{self.difficulty}"
 
     def get_questions(self):
+        """
+        対象のクイズの問題をランダムの順序にして返す
+        """
         questions = list(self.question_set.all())
         random.shuffle(questions)
         return questions[:self.number_of_questions]
@@ -53,9 +56,15 @@ class Question(models.Model):
         return self.text
 
     def get_answers(self):
+        """
+        答えを取得する
+        """
         return self.answer_set.all()
 
     def get_text_explanation(self):
+        """
+        解説を取得する
+        """
         return self.quizexpalanation.text
     
 
