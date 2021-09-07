@@ -58,7 +58,7 @@
                 </div>
                 <div class="sm:w-32 sm:order-none order-first sm:h-32 h-20 w-20 sm:ml-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
                     <a href="{% url 'user-profile' comment.user.id %}">
-                        <img class="rounded-full border-2" src="{% static 'profile_pic/default.jpg' %}">
+                        <img class="rounded-full border-2" src="{{comment.user.profile.image}}">
                     </a>
                 </div>
             </div>
@@ -67,7 +67,7 @@
             <div class="container px-5 py-24 mx-auto">
             <div class="flex items-center lg:w-3/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
                 <div class="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
-                    <img class="rounded-full border-2" src="{% static 'profile_pic/default.jpg' %}">
+                    <img class="rounded-full border-2" src="{{comment.user.profile.image}}">
                 </div>
                 <div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
                 <h2 class="text-gray-900 text-lg title-font font-medium mb-2">{{ comment.user.username }}</h2>
