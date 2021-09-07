@@ -86,7 +86,7 @@ class QuizListView(ListView):
             query = query.filter(
                 Q(category__name__icontains=search_word) | Q(name__icontains=search_word)
                 )
-        return query
+        return query.order_by('-id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
