@@ -181,7 +181,7 @@ def add_question_view(request, pk):
             
             QuizExplanation.objects.create(question=question, text=question_expalaination_text, source=question_expalaination_source)
 
-            return redirect('my-quiz-list')
+            return redirect('my-quiz-list', user_id=user.id)
             
     return render(request, 'components/create_add_edit_question.html', {'form': form})
     
@@ -197,7 +197,7 @@ def delete_quiz_view(request, pk):
     except Quiz.DoesNotExist:
         raise Http404
     quiz.delete()
-    return redirect('my-quiz-list')
+    return redirect('my-quiz-list', user_id=user.id)
     
 
 @login_required
@@ -224,7 +224,7 @@ def delete_question_view(request, pk):
     else:
         question.delete()
 
-    return redirect('my-quiz-list')
+    return redirect('my-quiz-list', user_id=user.id)
 
 
 @login_required
@@ -276,7 +276,7 @@ def edit_question_view(request, pk):
             quiz_explanatioin.text = question_expalaination_text
             quiz_explanatioin.source = question_expalaination_source
             quiz_explanatioin.save()
-            return redirect('my-quiz-list')
+            return redirect('my-quiz-list', user_id=user.id)
 
     return render(request, 'components/create_add_edit_question.html', {'form': form})
 
