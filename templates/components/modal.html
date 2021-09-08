@@ -4,7 +4,7 @@
 
 <div class="max-w-sm rounded overflow-hidden shadow-lg mx-auto my-8">
   <div class="px-6 py-4">
-  <p>{{quiz.user.username}}さん {{ quiz.name }} </p><hr>
+  <p> <a href="{% url 'user-profile' quiz.user.id %}">@{{quiz.user.username}}</a> - {{ quiz.name }} </p><hr>
     <div class="font-bold  text-black mb-2"></div>
     <p class="text-black text-base">
       目的:{{quiz.purpose}}
