@@ -1,7 +1,6 @@
 import boto3
 import os
 import secrets
-from PIL import Image
 from django.conf import settings
 
 
