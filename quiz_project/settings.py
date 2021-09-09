@@ -175,6 +175,13 @@ CATEGORY_CHOICES = (
     ('その他', 'その他')
     )
 
+ANSWER_CHOICES = (
+    (1, '選択肢1'),
+    (2, '選択肢2'),
+    (3, '選択肢3'),
+    (4, '選択肢4')
+)
+
 
 AUTH_USER_MODEL = 'accounts.User'
 

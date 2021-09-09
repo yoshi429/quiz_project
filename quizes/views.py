@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.conf import settings
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import Http404, JsonResponse
@@ -120,7 +121,7 @@ def create_quiz_view(request):
             answer_choice_2 = data['answer_choice_2']
             answer_choice_3 = data['answer_choice_3']
             answer_choice_4 = data['answer_choice_4']
-            correct_answer = data['correct_answer']
+            correct_answer = int(data['correct_answer'])
             question_expalaination_text = data['question_expalaination_text']
             question_expalaination_source = data['question_expalaination_source']
 
@@ -131,10 +132,10 @@ def create_quiz_view(request):
             
             question = Question.objects.create(quiz=quiz, text=question_text)
             
-            Answer.objects.create(question=question, text=answer_choice_1, is_correct= True if answer_choice_1 == correct_answer else False)
-            Answer.objects.create(question=question, text=answer_choice_2, is_correct= True if answer_choice_2 == correct_answer else False)
-            Answer.objects.create(question=question, text=answer_choice_3, is_correct= True if answer_choice_3 == correct_answer else False)
-            Answer.objects.create(question=question, text=answer_choice_4, is_correct= True if answer_choice_4 == correct_answer else False)
+            Answer.objects.create(question=question, text=answer_choice_1, is_correct= True if 1 == correct_answer else False)
+            Answer.objects.create(question=question, text=answer_choice_2, is_correct= True if 2 == correct_answer else False)
+            Answer.objects.create(question=question, text=answer_choice_3, is_correct= True if 3 == correct_answer else False)
+            Answer.objects.create(question=question, text=answer_choice_4, is_correct= True if 4 == correct_answer else False)
 
             QuizExplanation.objects.create(question=question, text=question_expalaination_text, source=question_expalaination_source)
 
@@ -165,7 +166,7 @@ def add_question_view(request, pk):
             answer_choice_2 = data['answer_choice_2']
             answer_choice_3 = data['answer_choice_3']
             answer_choice_4 = data['answer_choice_4']
-            correct_answer = data['correct_answer']
+            correct_answer = int(data['correct_answer'])
             question_expalaination_text = data['question_expalaination_text']
             question_expalaination_source = data['question_expalaination_source']
 
@@ -174,10 +175,10 @@ def add_question_view(request, pk):
             quiz.save()
             question = Question.objects.create(quiz=quiz, text=question_text)
 
-            Answer.objects.create(question=question, text=answer_choice_1, is_correct= True if answer_choice_1 == correct_answer else False)
-            Answer.objects.create(question=question, text=answer_choice_2, is_correct= True if answer_choice_2 == correct_answer else False)
-            Answer.objects.create(question=question, text=answer_choice_3, is_correct= True if answer_choice_3 == correct_answer else False)
-            Answer.objects.create(question=question, text=answer_choice_4, is_correct= True if answer_choice_4 == correct_answer else False)
+            Answer.objects.create(question=question, text=answer_choice_1, is_correct= True if 1 == correct_answer else False)
+            Answer.objects.create(question=question, text=answer_choice_2, is_correct= True if 2 == correct_answer else False)
+            Answer.objects.create(question=question, text=answer_choice_3, is_correct= True if 3 == correct_answer else False)
+            Answer.objects.create(question=question, text=answer_choice_4, is_correct= True if 4 == correct_answer else False)
             
             QuizExplanation.objects.create(question=question, text=question_expalaination_text, source=question_expalaination_source)
 
@@ -221,10 +222,11 @@ def delete_question_view(request, pk):
     
     if quiz.number_of_questions == 0:
         quiz.delete()
+        return redirect('my-quiz-list', user_id=user.id)
     else:
         question.delete()
-
-    return redirect('my-quiz-list', user_id=user.id)
+        return redirect('quiz-detail', pk=quiz.id)
+   
 
 
 @login_required
@@ -246,27 +248,30 @@ def edit_question_view(request, pk):
         raise Http404
     
     if request.method == 'POST':
+        print('a')
         form = EditQuestionForm(request.POST)
+        form.fields["correct_answer"].choices = settings.ANSWER_CHOICES
         if form.is_valid():
             data = form.cleaned_data
+            print('data', data)
             question_text = data['question_text']
             answer_choice_1 = data['answer_choice_1']
             answer_choice_2 = data['answer_choice_2']
             answer_choice_3 = data['answer_choice_3']
             answer_choice_4 = data['answer_choice_4']
-            correct_answer = data['correct_answer']
+            correct_answer = int(data['correct_answer'])
             question_expalaination_text = data['question_expalaination_text']
             question_expalaination_source = data['question_expalaination_source']
-
+            print('correct_answer', correct_answer)
             
             question.text = question_text
             question.save()
 
             answer_choice_list = [answer_choice_1, answer_choice_2, answer_choice_3, answer_choice_4]
-            
+
             for i, answer in enumerate(answers):
                 answer.text = answer_choice_list[i]
-                if answer.text == correct_answer:
+                if i == correct_answer:
                     answer.is_correct = True
                     print('true')
                 else:
@@ -276,9 +281,30 @@ def edit_question_view(request, pk):
             quiz_explanatioin.text = question_expalaination_text
             quiz_explanatioin.source = question_expalaination_source
             quiz_explanatioin.save()
-            return redirect('my-quiz-list', user_id=user.id)
+            print('done!!!')
+            return redirect('quiz-detail', pk=quiz.id)
+    
+    answer_1 = answers[0].text
+    answer_2 = answers[1].text
+    answer_3 = answers[2].text
+    answer_4 = answers[3].text
+    answer_select = None
 
-    return render(request, 'components/create_add_edit_question.html', {'form': form})
+    for i in range(4):
+        if answers[i].is_correct == True:
+            answer_select = i + 1
+
+    context = {
+        'form': form,
+        'question': question, 
+        'answer_1': answer_1,
+        'answer_2': answer_2,
+        'answer_3': answer_3,
+        'answer_4': answer_4,
+        'answer_select': answer_select
+    }
+
+    return render(request, 'quizes/edit.html', context=context)
 
 
 @login_required

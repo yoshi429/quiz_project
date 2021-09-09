@@ -8,6 +8,7 @@ from .models import Question
 
 DIFF_CHOICES = settings.DIFF_CHOICES
 CATEGORY_CHOICES = settings.CATEGORY_CHOICES
+ANSWER_CHOICES = settings.ANSWER_CHOICES
 
 
 class CreateQuizForm(forms.Form):
@@ -24,25 +25,10 @@ class CreateQuizForm(forms.Form):
     answer_choice_2 = forms.CharField(label='選択肢2')
     answer_choice_3 = forms.CharField(label='選択肢3')
     answer_choice_4 = forms.CharField(label='選択肢4')
-    correct_answer = forms.CharField(label='答え')
+    correct_answer = forms.ChoiceField(label='答え', choices=ANSWER_CHOICES)
     question_expalaination_text = forms.CharField(label='解説')
     question_expalaination_source = forms.CharField(label='ソース')
 
-    def clean(self):
-        data = super().clean()
-        answer_choice_1 =  data['answer_choice_1']
-        answer_choice_2 =  data['answer_choice_2']
-        answer_choice_3 =  data['answer_choice_3']
-        answer_choice_4 =  data['answer_choice_4']        
-        correct_answer =  data['correct_answer']
-
-        if correct_answer != answer_choice_1:
-            if correct_answer != answer_choice_2:
-                if correct_answer != answer_choice_3:
-                    if correct_answer != answer_choice_4:
-                        raise ValidationError('選択肢の中に答えがありません。')
-        return data
-    
     def clean_rimit_time(self):
         rimit_time = self.cleaned_data['rimit_time']
         if rimit_time <=0 or rimit_time > 100:
@@ -67,24 +53,9 @@ class AddQuestionForm(forms.Form):
     answer_choice_2 = forms.CharField(label='選択肢2')
     answer_choice_3 = forms.CharField(label='選択肢3')
     answer_choice_4 = forms.CharField(label='選択肢4')
-    correct_answer = forms.CharField(label='答え')
+    correct_answer = forms.ChoiceField(label='答え', choices=ANSWER_CHOICES)
     question_expalaination_text = forms.CharField(label='解説')
     question_expalaination_source = forms.CharField(label='ソース')
-
-    def clean(self):
-        data = super().clean()
-        answer_choice_1 =  data['answer_choice_1']
-        answer_choice_2 =  data['answer_choice_2']
-        answer_choice_3 =  data['answer_choice_3']
-        answer_choice_4 =  data['answer_choice_4']
-        correct_answer =  data['correct_answer']
-
-        if correct_answer != answer_choice_1:
-            if correct_answer != answer_choice_2:
-                if correct_answer != answer_choice_3:
-                    if correct_answer != answer_choice_4:
-                        raise ValidationError('選択肢の中に答えがありません。')
-        return data
     
     def clean_rimit_time(self):
         rimit_time = self.cleaned_data['rimit_time']
@@ -109,24 +80,9 @@ class EditQuestionForm(forms.Form):
     answer_choice_2 = forms.CharField(label='選択肢2')
     answer_choice_3 = forms.CharField(label='選択肢3')
     answer_choice_4 = forms.CharField(label='選択肢4')
-    correct_answer = forms.CharField(label='答え')
+    correct_answer = forms.ChoiceField(label='答え', choices=ANSWER_CHOICES)
     question_expalaination_text = forms.CharField(label='解説')
     question_expalaination_source = forms.CharField(label='ソース')
-
-    def clean(self):
-        data = super().clean()
-        answer_choice_1 =  data['answer_choice_1']
-        answer_choice_2 =  data['answer_choice_2']
-        answer_choice_3 =  data['answer_choice_3']
-        answer_choice_4 =  data['answer_choice_4']
-        correct_answer =  data['correct_answer']
-
-        if correct_answer != answer_choice_1:
-            if correct_answer != answer_choice_2:
-                if correct_answer != answer_choice_3:
-                    if correct_answer != answer_choice_4:
-                        raise ValidationError('選択肢の中に答えがありません。')
-        return data
     
     def clean_rimit_time(self):
         rimit_time = self.cleaned_data['rimit_time']
