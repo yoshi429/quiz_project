@@ -93,10 +93,9 @@ class EditQuestionForm(forms.Form):
     def clean_question_text(self):
         question_text = self.cleaned_data['question_text']
         qs = Question.objects.filter(text=question_text)
-        if qs.exists():
+        if len(qs) > 1:
             raise ValidationError('この問題は既に存在しています。恐れ入りますが、文章を少し変えてください。')
         return question_text
-
 
 class CommentQuizForm(forms.Form):
     """

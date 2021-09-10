@@ -235,7 +235,6 @@ def edit_question_view(request, pk):
     既存のクイズの問題を編集する機能
     """
     user = request.user
-    form = EditQuestionForm()
     try:
         question = Question.objects.get(pk=pk)
         quiz = question.quiz
@@ -248,9 +247,7 @@ def edit_question_view(request, pk):
         raise Http404
     
     if request.method == 'POST':
-        print('a')
         form = EditQuestionForm(request.POST)
-        form.fields["correct_answer"].choices = settings.ANSWER_CHOICES
         if form.is_valid():
             data = form.cleaned_data
             print('data', data)
@@ -271,6 +268,7 @@ def edit_question_view(request, pk):
 
             for i, answer in enumerate(answers):
                 answer.text = answer_choice_list[i]
+                i += 1 
                 if i == correct_answer:
                     answer.is_correct = True
                     print('true')
@@ -284,27 +282,24 @@ def edit_question_view(request, pk):
             print('done!!!')
             return redirect('quiz-detail', pk=quiz.id)
     
-    answer_1 = answers[0].text
-    answer_2 = answers[1].text
-    answer_3 = answers[2].text
-    answer_4 = answers[3].text
-    answer_select = None
+    else: 
+        answer_select = None
+        for i in range(4):
+            if answers[i].is_correct == True:
+                answer_select = i + 1
 
-    for i in range(4):
-        if answers[i].is_correct == True:
-            answer_select = i + 1
-
-    context = {
-        'form': form,
-        'question': question, 
-        'answer_1': answer_1,
-        'answer_2': answer_2,
-        'answer_3': answer_3,
-        'answer_4': answer_4,
-        'answer_select': answer_select
-    }
-
-    return render(request, 'quizes/edit.html', context=context)
+        data = {
+            "question_text": question.text,
+            "answer_choice_1": answers[0].text,
+            "answer_choice_2": answers[1].text,
+            "answer_choice_3": answers[2].text,
+            "answer_choice_4": answers[3].text,
+            "correct_answer": answer_select,   
+            "question_expalaination_text": question.quizexplanation.text,
+            "question_expalaination_source": question.quizexplanation.source,
+        }
+        form = EditQuestionForm(data)
+        return render(request, 'components/create_add_edit_question.html', {"form": form})
 
 
 @login_required
