@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 @pytest.mark.django_db
 def test_create_user():
     User.objects.create_user('test', 'test@mail.com', 'test')
@@ -69,3 +70,4 @@ def test_unfollow_user():
     assert user_1_following_count == 0
     assert user_2_follower_count == 0
     assert user_2_following_count == 0
+
