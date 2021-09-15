@@ -24,7 +24,6 @@ class Command(BaseCommand):
             validate_password(password, user)
             user.set_password(password)
             user.save()
-            Profile.objects.create(user=user)
             print(f"{full_name} ,{email} ,{password}")
 
         user_accounts  =User.objects.all().count()

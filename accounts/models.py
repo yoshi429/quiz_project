@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin,
 )
+from django.dispatch import receiver
+from django.db.models.signals import (
+    post_save
+)
 from django.urls import reverse_lazy
 
 
@@ -47,6 +51,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return reverse_lazy('home')
+
+@receiver(post_save, sender=User)
+def user_created_handler(sender, instance, created, *args, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+        print('Profile created!')
 
 
 class ContactUs(models.Model):

@@ -26,13 +26,15 @@ class UserRegistrationForm(forms.ModelForm):
 
     def save(self, commit=False):
         user = super().save(commit=False)
-        validate_password(self.cleaned_data['password'], user)
-        user.set_password(self.cleaned_data['password'])
+        password = self.cleaned_data['password']
+        user.set_password(password)
         user.save()
-        Profile.objects.create(user=user)
         return user
     
     def clean_username(self):
+        """
+        ユーザーネームが存在しているかどうか
+        """
         username = self.cleaned_data['username']
         qs = User.objects.filter(username__iexact=username)
         if qs.exists():
@@ -40,6 +42,9 @@ class UserRegistrationForm(forms.ModelForm):
         return username
     
     def clean_email(self):
+        """
+        メールのチェック
+        """
         email = self.cleaned_data['email']
         qs = User.objects.filter(username__iexact=email)
         if qs.exists():
@@ -47,21 +52,32 @@ class UserRegistrationForm(forms.ModelForm):
         return email
 
     def clean_password(self):
+        """
+        パスワードの文字数と単純かどうかチェック
+        """
         password = self.cleaned_data['password']
         if len(password) <= 7:
             raise ValidationError('8字以上のパスワードを入力して下さい')
+        validate_password(password)
         return password
     
     def clean_is_understand(self):
+        """
+        利用規約に同意しているかどうか
+        """
         is_understand = self.cleaned_data['is_understand']
         if not is_understand:
             raise ValidationError('利用規約に同意してください。')
         return is_understand
 
     def clean(self):
+        """
+        パスワードと確認用パスワードのチェック
+        """
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
+        print(password, confirm_password)
         if password != confirm_password:
             print('パスワードと確認用パスワードが一致しません！')
             raise ValidationError('パスワードと確認用パスワードが一致しません！')
@@ -98,6 +114,9 @@ class EditProfileForm(forms.Form):
     introduce = forms.CharField(label='紹介文', required=False)
 
     def clean_introduce(self):
+        """
+        文字数制限
+        """
         introduce = self.cleaned_data['introduce']
         if len(introduce) > 255:
             raise ValidationError("255字以内です。")
