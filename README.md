@@ -1,5 +1,11 @@
 # quiz_project
 
+This app is called "OlymQuiz".  
+You would learn accurate information through quiz.  
+You can post quiz and share you quiz.  
+
+This application is used by Django, JavaScript, jQuery, Amazon S3, HTML, Tailwind CSS.
+
 SNS型クイズの投稿サイト(Django,JavaScript, Amazon S3, HTML, Tailwind CSS)
 クイズを通して正しい知識を学ぶをコンセプトにしたクイズの投稿サービスです
 
